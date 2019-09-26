@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-2" for="Password">First Name</label>
+                            <label class="control-label col-md-2" for="Password">Password</label>
                             <div class="col-md-10">
                                 @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -101,6 +101,24 @@
 
     <script>
         $(document).ready(function () {
+
+            /*Preview Selected Image*/
+            function readUrl(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $("img#imgPreview").attr("src", e.target.result).width(200).height(200);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imageUpload").change(function () {
+                readUrl(this);
+            });
+
 
         });//End Ready
     </script>

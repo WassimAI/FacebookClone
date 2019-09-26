@@ -27,6 +27,8 @@ namespace FacebookClone.Controllers
             return View();
         }
 
+        // POST: /Account/CreateAccount
+        [HttpPost]
         public ActionResult CreateAccount(UserVM model, HttpPostedFileBase file)
         {
             //Init Db
@@ -36,14 +38,14 @@ namespace FacebookClone.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Please make sure all the fields are entered and correct");
-                return View(model);
+                return View("Index",model);
             }
 
             //Make sure username is unique
             if(db.Users.Any(x=>x.Username == model.Username))
             {
                 ModelState.AddModelError("", "Sorry, the username already exists");
-                return View(model);
+                return View("Index", model);
             }
 
             //Create user Dto
@@ -98,6 +100,21 @@ namespace FacebookClone.Controllers
 
             //Redirect
             return Redirect("~/" + model.Username);
+        }
+
+        // GET: /{Username}
+        public string Username(string username="")
+        {
+            return username;
+        }
+
+        // GET: /Account/Logout
+        [Authorize]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+
+            return Redirect("~/");
         }
 
         

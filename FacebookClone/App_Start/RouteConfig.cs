@@ -20,6 +20,10 @@ namespace FacebookClone
             //);
 
             routes.MapRoute("default", "", new { controller = "Account", action = "Index" });
+
+            routes.MapRoute("CreateAccount", "Account/CreateAccount", new { controller = "Account", action = "CreateAccount" });
+
+            routes.MapRoute("Account", "{Username}", new { controller = "Account", action = "Username" });
         }
     }
 }
