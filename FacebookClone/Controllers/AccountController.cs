@@ -69,7 +69,7 @@ namespace FacebookClone.Controllers
             FormsAuthentication.SetAuthCookie(model.Username, false);
 
             //Set Upload folder
-            var uploadDir = new DirectoryInfo(string.Format("{0}Uploads", Server.MapPath(@"\")));
+            var uploadDir = new DirectoryInfo(string.Format("{0}{1}", Server.MapPath(@"\"), "Uploads"));
 
             //Check if file was uploaded
             if (file != null && file.ContentLength > 0)
@@ -77,15 +77,15 @@ namespace FacebookClone.Controllers
                 //Get and verify extension
                 string ext = file.ContentType.ToLower();
 
-                if (ext != "imgage/jpg" &&
-                    ext != "imgage/jpeg" &&
-                    ext != "imgage/png" &&
-                    ext != "imgage/gof" &&
-                    ext != "imgage/x-png" &&
-                    ext != "imgage/pjpeg")
+                if (ext != "image/jpg" &&
+                    ext != "image/jpeg" &&
+                    ext != "image/png" &&
+                    ext != "image/gof" &&
+                    ext != "image/x-png" &&
+                    ext != "image/pjpeg")
                 {
                     ModelState.AddModelError("", "The image was not uploaded, wrong image extension");
-                    return View(model);
+                    return View("Index", model);
                 }
 
                 //Set image name
@@ -117,7 +117,10 @@ namespace FacebookClone.Controllers
             return Redirect("~/");
         }
 
-        
+        public ActionResult LoginPartial()
+        {
+            return PartialView();
+        }
 
     }
 }
