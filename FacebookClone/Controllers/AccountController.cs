@@ -20,6 +20,7 @@ namespace FacebookClone.Controllers
 
             if (!string.IsNullOrEmpty(username))
             {
+                //FormsAuthentication.SignOut();
                 return Redirect("~/" + username);
             }
 
@@ -103,9 +104,10 @@ namespace FacebookClone.Controllers
         }
 
         // GET: /{Username}
-        public string Username(string username="")
+        [Authorize]
+        public ActionResult Username(string username="")
         {
-            return username;
+            return View();
         }
 
         // GET: /Account/Logout
@@ -120,6 +122,24 @@ namespace FacebookClone.Controllers
         public ActionResult LoginPartial()
         {
             return PartialView();
+        }
+
+        //POST: Account/Login
+        [HttpPost]
+        public string Login(string username, string password)
+        {
+            //Init Db
+            Db db = new Db();
+
+            //Check if user exists
+            if(db.Users.Any(x=> x.Username.Equals(username) && x.Password.Equals(password)))
+            {
+                //Login
+                FormsAuthentication.SetAuthCookie(username, false);
+                return "ok";
+            }
+
+            return "problem";
         }
 
     }

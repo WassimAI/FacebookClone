@@ -201,6 +201,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\LoginPartial.cshtml" />
+    <Content Include="Views\Account\Username.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\" />
