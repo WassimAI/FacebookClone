@@ -30,6 +30,8 @@ namespace FacebookClone
             routes.MapRoute("LoginPartial", "Account/LoginPartial", new { controller = "Account", action = "LoginPartial" });
 
             routes.MapRoute("Login", "Account/Login", new { controller = "Account", action = "Login" });
+
+            routes.MapRoute("Profile", "Profile/{action}/{id}", new { controller = "Profile", action = "Index", id = UrlParameter.Optional });
         }
     }
 }

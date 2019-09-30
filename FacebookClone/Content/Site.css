@@ -30,3 +30,18 @@ div.em {
     right: -30px;
     bottom: 30px;
 }
+
+.liveSearchLi {
+    width: 300px;
+    display: block;
+    padding: 10px;
+    position: relative;
+}
+
+.searchText {
+    position: relative;
+    margin-top: 7px;
+    margin-left: 100px;
+    padding: 5px 10px;
+    top: -5px;
+}
