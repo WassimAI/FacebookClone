@@ -5,3 +5,45 @@
 
 <h2>Your Dashboard</h2>
 
+@section Scripts{
+    
+    <script>
+        $(document).ready(function () {
+
+            /*Live Search*/
+            $("input#searchText").on("keyup", function () {
+
+                var searchVal = $("input#searchText").val();
+                $("ul#liveSearchUl").empty();
+
+                if (searchVal == "" || searchVal == " ")
+                    return false;
+
+                var url = "Profile/LiveSearch";
+
+                $.post(url, { searchVal : searchVal }, function (data) {
+                    if (data.length > 0) {
+                        $("ul#liveSearchUl").append("<li class='close'>x</li>");
+                    }
+
+                    for (var i = 0; i < data.length; i++) {
+                        var obj = data[i];
+                        $("ul#liveSearchUl").append("<li class='liveSearchLi'><a href='/" + obj.Username + "'><img src='Uploads/" + obj.UserId + ".jpg'/>"+ " " + obj.FirstName + " " + obj.LastName + "</a></li>");
+                    }
+                });
+            });
+
+            $("body").on("click", "ul#liveSearchUl li.close",function () {
+                //e.preventDefault();
+
+                $("ul#liveSearchUl").empty();
+                $("input#searchText").val("");
+            });
+
+
+
+        });//End Ready
+    </script>
+    
+}
+

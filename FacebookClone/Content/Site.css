@@ -45,3 +45,26 @@ div.em {
     padding: 5px 10px;
     top: -5px;
 }
+
+li.liveSearchLi img {
+    width: 50px;
+}
+
+ul#liveSearchUl {
+    position: absolute;
+    background: #222;
+    right: -10px;
+    top: 70px;
+    padding: 0;
+}
+
+ul#liveSearchUl li.close {
+    position: absolute;
+    color: white;
+    opacity: 1 !important;
+    right: 10px;
+    list-style: none;
+    top: 0;
+    cursor: pointer;
+    z-index: 10;
+}
