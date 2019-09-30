@@ -20,7 +20,6 @@ namespace FacebookClone.Controllers
 
             if (!string.IsNullOrEmpty(username))
             {
-                //FormsAuthentication.SignOut();
                 return Redirect("~/" + username);
             }
 
@@ -107,6 +106,16 @@ namespace FacebookClone.Controllers
         [Authorize]
         public ActionResult Username(string username="")
         {
+            Db db = new Db();
+
+            //Check if user exists
+            if (!db.Users.Any(x => x.Username.Equals(username)))
+            {
+                return Redirect("~/");
+            }
+
+            ViewBag.username = username;
+
             return View();
         }
 
