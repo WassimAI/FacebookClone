@@ -28,6 +28,9 @@
                 @if (Request.IsAuthenticated)
                 {
                     <ul class="nav navbar-nav navbar-right owner">
+                        <li class="fullName">
+                            @ViewBag.fullname
+                        </li>
                         <li class="logout">@Html.ActionLink("Logout", "Logout", "Account")</li>
                     </ul>
                 }
