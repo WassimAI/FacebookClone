@@ -28,6 +28,17 @@
                 @if (Request.IsAuthenticated)
                 {
                     <ul class="nav navbar-nav navbar-right owner">
+                        <li class="friendcountli">
+                            @if (ViewBag.friendcount != null)
+                            {
+                                <span class="glyphicon glyphicon-user frnotif @User.Identity.Name red"><span>@ViewBag.friendcount</span></span>
+                                
+                            }
+                            else
+                            {
+                                <span class="glyphicon glyphicon-user frnotif @User.Identity.Name red"></span>
+                            }
+                        </li>
                         <li class="fullName">
                             @ViewBag.fullname
                         </li>

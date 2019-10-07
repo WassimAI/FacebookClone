@@ -152,6 +152,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Data\db.cs" />
+    <Compile Include="Models\Data\FriendsDTO.cs" />
     <Compile Include="Models\Data\UserDTO.cs" />
     <Compile Include="Models\ViewModels\Account\LoginVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserVM.cs" />
@@ -160,6 +161,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\FbCloneDb.mdf" />
+    <Content Include="App_Data\FbCloneDb_log.ldf">
+      <DependentUpon>FbCloneDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

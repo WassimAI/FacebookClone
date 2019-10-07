@@ -38,11 +38,11 @@ namespace FacebookClone.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Please make sure all the fields are entered and correct");
-                return View("Index",model);
+                return View("Index", model);
             }
 
             //Make sure username is unique
-            if(db.Users.Any(x=>x.Username == model.Username))
+            if (db.Users.Any(x => x.Username == model.Username))
             {
                 ModelState.AddModelError("", "Sorry, the username already exists");
                 return View("Index", model);
@@ -104,7 +104,7 @@ namespace FacebookClone.Controllers
 
         // GET: /{Username}
         [Authorize]
-        public ActionResult Username(string username="")
+        public ActionResult Username(string username = "")
         {
             Db db = new Db();
 
@@ -133,9 +133,45 @@ namespace FacebookClone.Controllers
             //Check if user viewing is same as user logged in
             string userType = "guest";
 
-            if(userDTO == userDTO2)
+            if (userDTO == userDTO2)
             {
                 userType = "owner";
+            }
+
+            //Check if both users have pending friendship or not friends
+            if (userType == "guest")
+            {
+                FriendsDTO f1 = db.Friends.Where(x => x.User1.Equals(userDTO.Id) && x.User2.Equals(userDTO2.Id)).FirstOrDefault();
+                FriendsDTO f2 = db.Friends.Where(x => x.User2.Equals(userDTO.Id) && x.User1.Equals(userDTO2.Id)).FirstOrDefault();
+
+                if(f1==null && f2 == null)
+                {
+                    ViewBag.notfriends = "true";
+                }
+
+                if (f1 != null)
+                {
+                    if (!f1.IsActive)
+                    {
+                        ViewBag.notfriends = "pending";
+                    }
+                }
+
+                if (f2 != null)
+                {
+                    if (!f2.IsActive)
+                    {
+                        ViewBag.notfriends = "pending";
+                    }
+                }
+            }
+
+            //Get friend requests count
+            var friendCount = db.Friends.Count(x => x.User2 == userDTO.Id && x.IsActive == false);
+
+            if (friendCount > 0)
+            {
+                ViewBag.friendcount = friendCount;
             }
 
             ViewBag.usertype = userType;
@@ -165,7 +201,7 @@ namespace FacebookClone.Controllers
             Db db = new Db();
 
             //Check if user exists
-            if(db.Users.Any(x=> x.Username.Equals(username) && x.Password.Equals(password)))
+            if (db.Users.Any(x => x.Username.Equals(username) && x.Password.Equals(password)))
             {
                 //Login
                 FormsAuthentication.SetAuthCookie(username, false);

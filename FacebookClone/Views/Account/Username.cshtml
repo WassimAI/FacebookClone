@@ -10,28 +10,28 @@
         </p>
         <h2>@ViewBag.viewingFullName (@ViewBag.username)</h2>
 
-        @if(ViewBag.usertype == "guest")
+        @if (ViewBag.usertype == "guest")
         {
-    <div class="friends">
-        @if (ViewBag.notfriends == "pending")
-        {
-            <div class="areFriendDiv alert alert-warning">
-                <p>Pending friend request</p>
+            <div class="friends">
+                @if (ViewBag.notfriends == "pending")
+                {
+                    <div class="areFriendDiv alert alert-warning">
+                        <p>Pending friend request</p>
+                    </div>
+                }
+                else if (ViewBag.notfriends == "true")
+                {
+                    <div class="areFriendDiv alert alert-info">
+                        <a href="#" class="addFriend">Add Friend</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="areFriendDiv alert alert-success">
+                        <span class="glyphicon glyphicon-thumbs-up"></span> Friends
+                    </div>
+                }
             </div>
-        }
-        else if (ViewBag.notfriends == "true")
-        {
-            <div class="areFriendDiv alert alert-info">
-                <a href="#" class="addFriend">Add Friend</a>
-            </div>
-        }
-        else
-        {
-            <div class="areFriendDiv alert alert-success">
-                <span class="glyphicon glyphicon-thumbs-up"></span>Friends
-            </div>
-        }
-    </div>
         }
     </div>
 </div>
@@ -82,6 +82,14 @@
 
             hub.client.test = function (msg) {
                 console.log(msg);
+            }
+
+             /* frnotify */
+            hub.client.frnotify = function (f, count) {
+                $("span.frnotif." + f + "> span").text(count);
+                $("span.frnotif." + f).addClass("red");
+                Console.log(f + " " + count);
+                alert("working!");
             }
 
             //COnnect to the hub

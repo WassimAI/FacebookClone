@@ -80,3 +80,14 @@ li.fullName {
     margin-top: 15px;
     /*margin: 0 10px;*/
 }
+
+.frnotif {
+    color: white;
+    margin-top: 15px;
+    padding: 0 5px 0 0;
+}
+
+.frnotif.red {
+    color: red;
+    cursor: pointer;
+}
