@@ -30,6 +30,7 @@ namespace FacebookClone.Controllers
             return Json(usernames);
         }
 
+        //POST: Profile/AddFriend
         [HttpPost]
         public void AddFriend(string friend)
         {
@@ -55,6 +56,31 @@ namespace FacebookClone.Controllers
             db.Friends.Add(friendDTO);
             db.SaveChanges();
 
+        }
+
+        //POST: Profile/DisplayFriendRequest
+        [HttpPost]
+        public JsonResult DisplayFriendRequest()
+        {
+            //inti db
+            Db db = new Db();
+
+            //Get user Id
+            int UserId = db.Users.Where(x => x.Username.Equals(User.Identity.Name)).FirstOrDefault().Id;
+
+            //Get friends list
+            List<FriendRequestVM> list = new List<FriendRequestVM>();
+            list = db.Friends.Where(x => x.User2.Equals(UserId) && x.IsActive==false).ToArray().Select(x => new FriendRequestVM(x)).ToList();
+
+            //Init list of users
+            List<UserDTO> usersList = new List<UserDTO>();
+            foreach(var friend in list)
+            {
+                usersList.Add(db.Users.Where(x => x.Id == friend.User1).FirstOrDefault());
+            }
+
+            //Return Json
+            return Json(usersList);
         }
     }
 }

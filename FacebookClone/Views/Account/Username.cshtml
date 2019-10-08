@@ -116,6 +116,37 @@
                     });
                 });
 
+        /*Display Friend Requests*/
+            $("body").on("click", "span.frnotif.red", function () {
+
+                $("#friendnotiful").empty();
+
+                var url = "Profile/DisplayFriendRequest";
+
+                $.post(url, {}, function (data) {
+                    if (data.length > 0) {
+                        $("#friendnotiful").append("<li class='close'>x</li>");
+                    }
+
+                    for (var i = 0; i < data.length; i++) {
+                        var obj = data[i];
+                        $("ul#friendnotiful").append("<li class='friendnotifli'><a href='/" +
+                            obj.Username + "'><img src='Uploads/" + obj.Id +
+                            ".jpg'/>" + " " + obj.FirstName + " " + obj.LastName +
+                            "</a>" + "<a class='accept' href='#' data-id='" + obj.Id +
+                            "'><span class='glyphicon glyphicon-ok'></span></a>" +
+                            "<a class='decline' href='#' data-id='" + obj.Id +
+                            "'><span class='glyphicon glyphicon-remove'></span></a></li>");
+                    }
+                });
+            });
+
+            $("body").on("click", "ul#friendnotiful li.close", function () {
+                //e.preventDefault();
+
+                $("ul#friendnotiful").empty();
+            });
+
 
         });//End Ready
     </script>
