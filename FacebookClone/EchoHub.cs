@@ -35,13 +35,32 @@ namespace FacebookClone
             int friendId = userDTO.Id;
 
             //Get fr count
-            var friendCount = db.Friends.Count(x => x.User2.Equals(friendId) && x.IsActive == false);
+            var friendReqCount = db.Friends.Count(x => x.User2.Equals(friendId) && x.IsActive == false);
 
             //Set clients
             var clients = Clients.Others;
 
             //Call Js function
-            clients.frnotify(friend, friendCount);
+            clients.frnotify(friend, friendReqCount);
+        }
+
+        public void GetFrCount()
+        {
+            //Init Db
+            Db db = new Db();
+
+            //Get friend Id
+            int userId = db.Users.Where(x => x.Username.Equals(Context.User.Identity.Name)).FirstOrDefault().Id;
+
+            //Get Friend Count
+            var friendReqCount = db.Friends.Count(x => x.User2.Equals(userId) && x.IsActive == false);
+
+            //Set Clients
+            var clients = Clients.All;
+
+            //Call Js Function
+            clients.frcount(Context.User.Identity.Name, friendReqCount);
+
         }
     }
 }

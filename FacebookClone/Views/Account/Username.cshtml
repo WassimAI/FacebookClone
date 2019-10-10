@@ -88,11 +88,23 @@
             hub.client.frnotify = function (f, count) {
                 $("span.frnotif." + f + "> span").text(count);
                 $("span.frnotif." + f).addClass("red");
-                Console.log(f + " " + count);
-                alert("working!");
+                //I noticed that this log below shows only on the friend who was notified, which is to think about
+                console.log(f + " " + count);
             }
 
-            //COnnect to the hub
+            /*frcount function - After accepting a reuest*/
+            hub.client.frcount = function(username, count) {
+                if (count > 0) {
+                    $("span.frnotif." + username + "> span").text(count);
+                    console.log("frcount worked!");
+                } else {
+                    $("span.frnotif." + username + "> span").text("");
+                    $("span.frnotif." + username).removeClass("red");
+                    console.log("the else condition worked");
+                }
+            }
+
+            //Connect to the hub
             $.connection.hub
                         .start()
                 .done(function () {
@@ -145,6 +157,23 @@
                 //e.preventDefault();
 
                 $("ul#friendnotiful").empty();
+            });
+
+            /*Accept Friend Request*/
+            $("body").on("click", "a.accept", function (e) {
+                e.preventDefault();
+                var $this = $(this);
+
+                var url = "Profile/AcceptFriendRequest";
+                var friendId = $this.data("id");
+
+                $.post(url, { friendId: friendId }, function (data) {
+
+                }).done(function () {
+                    $this.parent().fadeOut("fast");
+                    hub.server.getFrCount();
+                    //hub.server.GetFCount(friendId);
+                });
             });
 
 
