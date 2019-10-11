@@ -33,6 +33,14 @@
                 }
             </div>
         }
+
+        <div class="friends @User.Identity.Name alert alert-success">
+            <span>@ViewBag.fCount</span> Friend(s)
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+
     </div>
 </div>
 
@@ -104,6 +112,21 @@
                 }
             }
 
+            /* Get friend(s) count*/
+            hub.client.fCount = function (u1, u2, count1, count2) {
+                if (count1 > 0) {
+                    $("div.friends." + u1 + "> span").text(count1);
+                } else {
+                    $("div.friends." + u1 + "> span").text("0");
+                }
+
+                if (count2 > 0) {
+                    $("div.friends." + u2 + "> span").text(count2);
+                } else {
+                    $("div.friends." + u2 + "> span").text("0");
+                }
+            }
+
             //Connect to the hub
             $.connection.hub
                         .start()
@@ -124,6 +147,39 @@
                                 .html("<p>Pending friend request</p>");
                         }).done(function () {
                             hub.server.notify(friend);
+                        });
+                    });
+
+                    /*Accept Friend Request*/
+                    $("body").on("click", "a.accept", function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+
+                        var url = "Profile/AcceptFriendRequest";
+                        var friendId = $this.data("id");
+
+                        $.post(url, { friendId: friendId }, function (data) {
+
+                        }).done(function () {
+                            $this.parent().fadeOut("fast");
+                            hub.server.getFrCount();
+                            hub.server.getFCount(friendId);
+                        });
+                    });
+
+                    /*Decline Firend Request*/
+                    $("body").on("click", "a.decline", function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+
+                        var url = "Profile/DeclineFriendRequest";
+                        var friendId = $this.data("id");
+
+                        $.post(url, { friendId: friendId }, function (data) {
+
+                        }).done(function () {
+                            $this.parent().fadeOut("fast");
+                            hub.server.getFrCount();
                         });
                     });
                 });
@@ -158,24 +214,6 @@
 
                 $("ul#friendnotiful").empty();
             });
-
-            /*Accept Friend Request*/
-            $("body").on("click", "a.accept", function (e) {
-                e.preventDefault();
-                var $this = $(this);
-
-                var url = "Profile/AcceptFriendRequest";
-                var friendId = $this.data("id");
-
-                $.post(url, { friendId: friendId }, function (data) {
-
-                }).done(function () {
-                    $this.parent().fadeOut("fast");
-                    hub.server.getFrCount();
-                    //hub.server.GetFCount(friendId);
-                });
-            });
-
 
         });//End Ready
     </script>

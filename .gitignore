@@ -13,6 +13,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+#wassim customized files
+/[Aa]pp_[Dd]ata/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

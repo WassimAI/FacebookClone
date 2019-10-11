@@ -166,13 +166,19 @@ namespace FacebookClone.Controllers
                 }
             }
 
-            //Get friend requests count
+            //Get friend requests count - Viewbag
             var friendCount = db.Friends.Count(x => x.User2 == userDTO.Id && x.IsActive == false);
 
             if (friendCount > 0)
             {
                 ViewBag.friendcount = friendCount;
             }
+
+            //Get Friend Count - ViewBag
+            int userId = userDTO.Id;
+
+            var friendCount2 = db.Friends.Count(x => x.User1 == userId && x.IsActive == true || x.User2 == userId && x.IsActive == true);
+            ViewBag.fCount = friendCount2;
 
             ViewBag.usertype = userType;
 
