@@ -182,6 +182,12 @@ namespace FacebookClone.Controllers
 
             ViewBag.usertype = userType;
 
+            //Get Message Count
+            var messageCount = db.Messages.Count(x => x.To == userId && x.Read == false);
+
+            //Viewbag message count
+            ViewBag.msgCount = messageCount;
+
             return View();
         }
 

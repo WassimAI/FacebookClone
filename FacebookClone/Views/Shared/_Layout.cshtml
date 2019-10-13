@@ -27,24 +27,36 @@
                 </ul>
                 @if (Request.IsAuthenticated)
                 {
-                    <ul class="nav navbar-nav navbar-right owner">
-                        <li class="friendcountli">
-                            @if (ViewBag.friendcount != null)
-                            {
-                                <span class="glyphicon glyphicon-user frnotif @User.Identity.Name red"><span>@ViewBag.friendcount</span></span>
-                                
-                            }
-                            else
-                            {
-                                <span class="glyphicon glyphicon-user frnotif @User.Identity.Name"><span></span></span>
-                            }
-                            <ul id="friendnotiful"></ul>
-                        </li>
-                        <li class="fullName">
-                            @ViewBag.fullname
-                        </li>
-                        <li class="logout">@Html.ActionLink("Logout", "Logout", "Account")</li>
-                    </ul>
+            <ul class="nav navbar-nav navbar-right owner">
+                <li class="friendcountli">
+                    @if (ViewBag.friendcount != null)
+                    {
+                        <span class="glyphicon glyphicon-user frnotif @User.Identity.Name red"><span>@ViewBag.friendcount</span></span>
+
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-user frnotif @User.Identity.Name"><span></span></span>
+                    }
+                    <ul id="friendnotiful"></ul>
+                </li>
+                <li class="msgcountli">
+                    @if (ViewBag.msgCount > 0)
+                    {
+                        <span class="glyphicon glyphicon-comment msgnotif @User.Identity.Name red"><span>@ViewBag.msgCount</span></span>
+
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-comment msgnotif @User.Identity.Name"><span></span></span>
+                    }
+                    <ul id="msgnotiful"></ul>
+                </li>
+                <li class="fullName">
+                    @ViewBag.fullname
+                </li>
+                <li class="logout">@Html.ActionLink("Logout", "Logout", "Account")</li>
+            </ul>
                 }
             </div>
         </div>
