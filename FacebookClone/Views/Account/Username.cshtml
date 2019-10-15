@@ -39,8 +39,21 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-md-6">
-
+    <div class="col-xs-12 col-md-6 wall">
+        @if (ViewBag.userType == "guest")
+        {
+            if (ViewBag.notfriends == null)
+            {
+                <div class="sendmsgparent">
+                    <div class="msgtextarea">
+                        <textarea id="msgarea"></textarea>
+                    </div>
+                    <a href="#" class="ta" id="sendmsg">Send Message</a>
+                    <img class="hide" src="~/Images/ajax-loaderblack.gif" />
+                    <div class="sendmsgnotfi alert alert-success hide">Message Sent.</div>
+                </div>
+            }
+        }
     </div>
 </div>
 
@@ -126,6 +139,17 @@
                     $("div.friends." + u2 + "> span").text("0");
                 }
             }
+            
+            hub.client.msgCount = function(username, count) {
+                if (count > 0) {
+                    $("span.msgnotif." + username + "> span").text(count);
+                    $("span.msgnotif." + username).addClass("red");
+                } else {
+                    $("span.msgnotif." + username + "> span").text("");
+                    $("span.msgnotif." + username).removeClass("red");
+                    console.log("the else condition worked");
+                }
+            }
 
             //Connect to the hub
             $.connection.hub
@@ -182,7 +206,63 @@
                             hub.server.getFrCount();
                         });
                     });
+
+                /*Send Message*/
+                    $("body").on("click", "a#sendmsg", function (e) {
+                        e.preventDefault();
+
+                        var $this = $(this);
+                        $this.parent().find("img").removeClass("hide");
+
+                        var friend = "@ViewBag.username";
+                        var message = $("#msgarea").val();
+                        var url = "Profile/SendMessage";
+
+                        $.post(url, { friend: friend, message: message }, function (data) {
+
+                        }).done(function () {
+                            $this.parent().find("img").addClass("hide");
+                            hub.server.notifyOfMessage(friend);
+                            $("#msgarea").val("");
+                            $this.parent().find(".sendmsgnotfi").removeClass("hide");
+                            setTimeout(function () {
+                                $this.parent().find(".sendmsgnotfi").fadeOut("fast", function () {
+                                    $this.parent().find(".sendmsgnotfi").addClass("hide");
+                                });
+                            },2000);
+                        });
+                    });
+
+                /*Display Unread Messages*/
+                    $("body").on("click", "span.msgnotif.red", function () {
+
+                        $("ul#msgnotiful").empty();
+
+                        var url = "Profile/DisplayUnreadMessages";
+
+                        $.post(url, {}, function (data) {
+                            if (data.length > 0) {
+                                $("ul#msgnotiful").append("<li class='close'>x</li>");
+                            }
+
+                            for (var i = 0; i < data.length; i++) {
+                                var obj = data[i];
+                                $("ul#msgnotiful").append("<li class='msgnotifli'><a href='/" +
+                                    obj.FromUsername + "'><img src='Uploads/" +
+                                    obj.FromId + ".jpg'/></a>" + " " + obj.Message + "</li>");
+                            }
+                        }).done(function () {
+                            //hub.server.notifyOfMessageOwner();
+                        });
+                    });
+
+                    $("body").on("click", "ul#friendnotiful li.close", function () {
+                        $("ul#msgnotiful").empty();
+                    });
+
                 });
+
+            ////////////////////////////////////
 
         /*Display Friend Requests*/
             $("body").on("click", "span.frnotif.red", function () {

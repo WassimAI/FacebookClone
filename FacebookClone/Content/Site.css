@@ -87,10 +87,10 @@ li.fullName {
     padding: 0 5px 0 0;
 }
 
-.frnotif.red {
-    color: red;
-    cursor: pointer;
-}
+    .frnotif.red, .msgnotif.red {
+        color: red;
+        cursor: pointer;
+    }
 
 li.friendcountli {
     position: relative;
@@ -118,4 +118,15 @@ li.friendnotifli a {
 }
 .friends {
     width: 150px;
+}
+
+li.msgcountli {
+    color: white;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+li.msgcountli span > span {
+    display: inline-block;
+    margin-left: 5px;
 }

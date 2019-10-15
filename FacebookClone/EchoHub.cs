@@ -6,6 +6,7 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Diagnostics;
 using FacebookClone.Models.Data;
+using System.Web.Mvc;
 
 namespace FacebookClone
 {
@@ -85,6 +86,24 @@ namespace FacebookClone
 
             //Call Js Function
             clients.fCount(Context.User.Identity.Name, friendUsername, friendCount1, friendCount2);
+        }
+
+        public void NotifyOfMessage(string friend)
+        {
+            //Init Db
+            Db db = new Db();
+
+            //Get friend Id
+            int friendId = db.Users.Where(x => x.Username.Equals(friend)).FirstOrDefault().Id;
+
+            //Get msg count
+            var messageCount = db.Messages.Count(x => x.To == friendId && x.Read == false);
+
+            //Set clients
+            var clients = Clients.Others;
+
+            //Call Js Function
+            clients.msgCount(friend, messageCount);
         }
     }
 }
