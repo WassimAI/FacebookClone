@@ -48,7 +48,7 @@
                     <div class="msgtextarea">
                         <textarea id="msgarea"></textarea>
                     </div>
-                    <a href="#" class="ta" id="sendmsg">Send Message</a>
+                    <a href="#" class="ta btn btn-success" id="sendmsg">Send Message</a>
                     <img class="hide" src="~/Images/ajax-loaderblack.gif" />
                     <div class="sendmsgnotfi alert alert-success hide">Message Sent.</div>
                 </div>
@@ -110,7 +110,7 @@
                 $("span.frnotif." + f + "> span").text(count);
                 $("span.frnotif." + f).addClass("red");
                 //I noticed that this log below shows only on the friend who was notified, which is to think about
-                console.log(f + " " + count);
+                //console.log(f + " " + count);
             }
 
             /*frcount function - After accepting a reuest*/
@@ -121,7 +121,7 @@
                 } else {
                     $("span.frnotif." + username + "> span").text("");
                     $("span.frnotif." + username).removeClass("red");
-                    console.log("the else condition worked");
+                    //console.log("the else condition worked");
                 }
             }
 
@@ -147,7 +147,7 @@
                 } else {
                     $("span.msgnotif." + username + "> span").text("");
                     $("span.msgnotif." + username).removeClass("red");
-                    console.log("the else condition worked");
+                    //console.log("the else condition worked");
                 }
             }
 
@@ -252,11 +252,12 @@
                                     obj.FromId + ".jpg'/></a>" + " " + obj.Message + "</li>");
                             }
                         }).done(function () {
-                            //hub.server.notifyOfMessageOwner();
+                            hub.server.notifyOfMessageOwner();
+                            //alert("the done is called");
                         });
                     });
 
-                    $("body").on("click", "ul#friendnotiful li.close", function () {
+                    $("body").on("click", "ul#msgnotiful li.close", function () {
                         $("ul#msgnotiful").empty();
                     });
 

@@ -100,10 +100,28 @@ namespace FacebookClone
             var messageCount = db.Messages.Count(x => x.To == friendId && x.Read == false);
 
             //Set clients
-            var clients = Clients.Others;
+            var clients = Clients.Others;//It means other clients than the guy who is using the web and made the call
 
             //Call Js Function
             clients.msgCount(friend, messageCount);
+        }
+
+        public void NotifyOfMessageOwner()
+        {
+            //Init Db
+            Db db = new Db();
+
+            //Get friend Id
+            int userId = db.Users.Where(x => x.Username.Equals(Context.User.Identity.Name)).FirstOrDefault().Id;
+
+            //Get msg count
+            var messageCount = db.Messages.Count(x => x.To == userId && x.Read == false);
+
+            //Set clients
+            var clients = Clients.Caller;//Caller means the same one using the web and made the call
+
+            //Call Js function
+            clients.msgCount(Context.User.Identity.Name, messageCount);
         }
     }
 }
