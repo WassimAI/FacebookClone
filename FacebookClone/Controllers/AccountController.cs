@@ -98,6 +98,18 @@ namespace FacebookClone.Controllers
                 file.SaveAs(path);
             }
 
+            //Add to wall
+            WallDTO wall = new WallDTO()
+            {
+                Id= id,
+                Message = "",
+                DateEdited = DateTime.Now
+            };
+
+            db.Walls.Add(wall);
+            db.SaveChanges();
+
+
             //Redirect
             return Redirect("~/" + model.Username);
         }
@@ -180,6 +192,9 @@ namespace FacebookClone.Controllers
             var friendCount2 = db.Friends.Count(x => x.User1 == userId && x.IsActive == true || x.User2 == userId && x.IsActive == true);
             ViewBag.fCount = friendCount2;
 
+            //View bag user ID
+            ViewBag.userId = userId;
+
             ViewBag.usertype = userType;
 
             //Get Message Count
@@ -187,6 +202,10 @@ namespace FacebookClone.Controllers
 
             //Viewbag message count
             ViewBag.msgCount = messageCount;
+
+            //Viewbag user wall
+            WallDTO wall = new WallDTO();
+            ViewBag.wallMessage = db.Walls.Where(x => x.Id == userId).Select(x => x.Message).FirstOrDefault();
 
             return View();
         }

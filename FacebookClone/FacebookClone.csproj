@@ -151,16 +151,24 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\db.cs" />
     <Compile Include="Models\Data\FriendsDTO.cs" />
     <Compile Include="Models\Data\MessageDTO.cs" />
     <Compile Include="Models\Data\UserDTO.cs" />
+    <Compile Include="Models\Data\WallDTO.cs" />
     <Compile Include="Models\ViewModels\Account\LoginVM.cs" />
     <Compile Include="Models\ViewModels\Account\UserVM.cs" />
     <Compile Include="Models\ViewModels\Profile\FriendRequestVM.cs" />
     <Compile Include="Models\ViewModels\Profile\LiveSeachUserVm.cs" />
     <Compile Include="Models\ViewModels\Profile\MessageVM.cs" />
+    <Compile Include="Models\ViewModels\Profile\WallVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +230,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -8,8 +8,13 @@ namespace FacebookClone.Models.Data
 {
     public class Db : DbContext
     {
+        public Db():base("Db")
+        {
+
+        }
         public DbSet<UserDTO> Users { get; set; }
         public DbSet<FriendsDTO> Friends { get; set; }
         public DbSet<MessageDTO> Messages { get; set; }
+        public DbSet<WallDTO> Walls { get; set; }
     }
 }

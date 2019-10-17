@@ -172,3 +172,8 @@ ul#msgnotiful {
     position: absolute;
     left: 280px;
 }
+
+.wall .ta {
+    display: block;
+    width: 150px;
+}
