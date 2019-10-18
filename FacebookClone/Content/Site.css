@@ -177,3 +177,11 @@ ul#msgnotiful {
     display: block;
     width: 150px;
 }
+
+.friendwall {
+    margin: 20px;
+}
+.friendwall img {
+    width: 50px;
+    margin-right: 10px;
+}

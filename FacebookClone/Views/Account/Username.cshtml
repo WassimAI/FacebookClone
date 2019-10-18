@@ -75,6 +75,23 @@
     </div>
 </div>
 
+<div class="row friendwallrow">
+    @if(Enumerable.Count(ViewBag.walls) > 0)
+    {
+        <h3>What you friends are saying</h3>
+        foreach(var item in ViewBag.walls)
+        {
+            <div class="friendwall">
+                <img src="~/Uploads/@(item.Id).jpg" />
+                @item.Message<span>@item.DateEdited</span>
+            </div>
+        }
+    } else
+    {
+        <h3>There are no friend walls</h3>
+    }
+</div>
+
 @section Scripts{
 
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
@@ -312,6 +329,27 @@
                 //e.preventDefault();
 
                 $("ul#friendnotiful").empty();
+            });
+
+        /*Update Wall message*/
+            $("a#sendsay").on("click", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                $this.parent().find("img").removeClass("hide");
+
+                var id = $this.data("id");
+
+                var message = $this.parent().find("textarea").val();
+
+                var url = "Profile/UpdateWallMessage";
+
+                $.post(url, { id: id, message: message }, function (data) {
+
+                }).done(function () {
+                    $this.parent().find("img").addClass("hide");
+                });
             });
 
         });//End Ready
