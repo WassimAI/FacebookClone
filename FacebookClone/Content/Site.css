@@ -185,3 +185,8 @@ ul#msgnotiful {
     width: 50px;
     margin-right: 10px;
 }
+
+body > .chatbox {
+    position: absolute;
+    /*left: -3000px;*/
+}

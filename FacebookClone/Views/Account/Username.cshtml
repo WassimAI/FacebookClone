@@ -76,21 +76,24 @@
 </div>
 
 <div class="row friendwallrow">
-    @if(Enumerable.Count(ViewBag.walls) > 0)
+    @if (Enumerable.Count(ViewBag.walls) > 0)
     {
         <h3>What you friends are saying</h3>
-        foreach(var item in ViewBag.walls)
+        foreach (var item in ViewBag.walls)
         {
             <div class="friendwall">
                 <img src="~/Uploads/@(item.Id).jpg" />
                 @item.Message<span>@item.DateEdited</span>
             </div>
         }
-    } else
+    }
+    else
     {
         <h3>There are no friend walls</h3>
     }
 </div>
+
+<div class="chat @User.Identity.Name"></div>
 
 @section Scripts{
 
@@ -136,6 +139,8 @@
             //Setup hub connection
             var hub = $.connection.echo;
 
+            //This is the beginning of client functions
+
             hub.client.test = function (msg) {
                 console.log(msg);
             }
@@ -174,7 +179,7 @@
                     $("div.friends." + u2 + "> span").text("0");
                 }
             }
-            
+
             hub.client.msgCount = function(username, count) {
                 if (count > 0) {
                     $("span.msgnotif." + username + "> span").text(count);
@@ -185,6 +190,32 @@
                     //console.log("the else condition worked");
                 }
             }
+
+            hub.client.getOnlineFriends = function (username, data) {
+                var result = JSON.parse(data);
+
+                for (var i = 0; i < result.length; i++){
+                    var obj = result[i];
+
+                    $(".chat." + username + "> ul").append("<li class='cf" + obj.id
+                        + "' data-id='" + obj.id + "'><img src='Uploads/"
+                        + obj.id + ".jpg'/>" + obj.friend + "</li>");
+
+                    var chatbox = $("body > .chatbox").clone();
+
+                    chatbox.attr("data-id" + obj.id);
+                    chatbox.attr("id", "cb" + obj.id);
+                    chatbox.addClass("hidden");
+
+                    chatbox.find("a.sendchat").attr("data-friend", obj.friend);
+                    chatbox.find("a.sendchat").attr("data-id", obj.id);
+                    chatbox.find("div.chatboxtext").attr("id", "cbtext", obj.id);
+
+                    $("#cbh" + username).append(chatbox);
+                    $("#cbh" + username + " #cb" + obj.id + " h4 > span").html("<img src='Uploads/" + obj.id + ".jpg' />");
+                }
+            }
+            //This is the end of client functions
 
             //Connect to the hub
             $.connection.hub
