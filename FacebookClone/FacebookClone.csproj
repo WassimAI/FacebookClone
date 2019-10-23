@@ -173,6 +173,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\FbCloneDb.mdf" />
+    <Content Include="App_Data\FbCloneDb_log.ldf">
+      <DependentUpon>FbCloneDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -215,7 +219,6 @@
     <Content Include="Views\Account\Username.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>

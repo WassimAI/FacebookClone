@@ -188,5 +188,22 @@ ul#msgnotiful {
 
 body > .chatbox {
     position: absolute;
-    /*left: -3000px;*/
+    left: -3000px;
+}
+
+.chat {
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+}
+
+.chat ul li {
+    cursor: pointer;
+    margin: 10px;
+    list-style: none;
+    padding: 10px;
+}
+
+.chat ul li img {
+    width: 30px !important;
 }
