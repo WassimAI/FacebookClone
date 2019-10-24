@@ -86,6 +86,8 @@ namespace FacebookClone
             //Set clients
             var clients = Clients.All;
 
+            UpdateChat();
+
             //Call Js Function
             clients.fCount(Context.User.Identity.Name, friendUsername, friendCount1, friendCount2);
         }
@@ -190,6 +192,9 @@ namespace FacebookClone
             //Call Js function
             clients.getonlinefriends(Context.User.Identity.Name, json);
 
+            //Update Chat
+            UpdateChat();
+
             //return
             return base.OnConnected();
         }
@@ -269,6 +274,22 @@ namespace FacebookClone
                 //Call Js function
                 clients.updatechat(username, json);
             }
+        }
+
+        public void SendChat(int friendId, string friendUsername, string message)
+        {
+            //Init Db
+            Db db = new Db();
+
+            //Get User Id
+            int userId = db.Users.Where(x => x.Username.Equals(Context.User.Identity.Name)).FirstOrDefault().Id;
+
+            //Set clients
+            var clients = Clients.All;
+
+            //call Js function
+            clients.sendchat(userId, Context.User.Identity.Name, friendId, friendUsername, message);
+
         }
     }
 }

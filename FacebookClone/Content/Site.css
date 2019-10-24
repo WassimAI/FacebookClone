@@ -207,3 +207,73 @@ body > .chatbox {
 .chat ul li img {
     width: 30px !important;
 }
+
+.chatboxholder {
+    position: fixed;
+    bottom: 0;
+    right: 130px;
+    width: 100%;
+    height: 50px;
+}
+
+.chatbox {
+    width: 300px;
+    height: 400px;
+    background: #222;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.chatbox h4 {
+    position: absolute;
+    top: -65px;
+    left: 0;
+    z-index: 5;
+    background: #222;
+    width: 100%;
+    padding: 5px;
+}
+
+.chatbox img {
+    width: 30px !important;
+    margin-bottom: 15px;
+}
+
+.chatboxtext {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    background: white;
+    width: 90%;
+    height: 270px;
+    z-index: 1;
+    margin: 0 auto;
+    left: 0;
+    max-height: 270px;
+    overflow: scroll;
+    padding: 10px;
+}
+
+.chattextarea {
+    position: absolute;
+    right: 0;
+    bottom: 40px;
+    width: 90%;
+    height: 60px;
+    margin: 0 auto;
+    left: 0;
+    padding: 10px;
+}
+
+a.sendchat {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.chat ul li.msg {
+    background: green;
+    color: white;
+}
+
